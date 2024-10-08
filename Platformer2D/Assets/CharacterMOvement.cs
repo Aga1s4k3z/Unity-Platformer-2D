@@ -19,8 +19,10 @@ public class CharacterMOvement : MonoBehaviour
 
     Animator animator;
     // Start wywo³ujemy raz, na pocz¹tku uruchomienia skryptu
+    SpriteRenderer spr;
     void Start()
     {
+        spr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -35,11 +37,23 @@ public class CharacterMOvement : MonoBehaviour
         if (moveDirection.x != 0)
         {
             animator.SetBool("isRunning", true);
-
+            if (moveDirection.x < 0)
+            {
+                spr.flipX = true;
+            } else
+            {
+                spr.flipX = false;
+            }
         }
         else
         {
             animator.SetBool("isRunning", false);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            animator.SetBool("attack", true);
+        } else {
+            animator.SetBool("attack", false);
         }
         bool isJumping = Input.GetKey(KeyCode.Space);
 
